@@ -7,7 +7,7 @@
   <a href="https://greasyfork.org/scripts/552886-wider-gemini"><img src="https://img.shields.io/badge/GreasyFork-552886-red.svg" alt="greasyfork"></a>
 </p>
 
-A lightweight, zero-overhead browser userscript (Tampermonkey) designed for widescreen and ultrawide (2K / 4K / ultrawide) monitors. Unlocks the narrow conversation width constraints across major web AI platforms to deliver an optimal reading experience for code blocks, tables, and long-form responses.
+A Tampermonkey userscript that widens the chat and input area across web AI platforms.
 
 [English](#widerwebllm-wider-gemini) | [中文说明](#widerwebllm-wider-gemini---中文说明)
 
@@ -25,47 +25,35 @@ A lightweight, zero-overhead browser userscript (Tampermonkey) designed for wide
 
 ---
 
-## ✨ Key Features
+## ✨ Features
 
-- **Widescreen Optimization**: Uses ~92% of available screen width by default (max 1800px) and up to 2000px on ultrawide monitors (≥2560px).
-- **Uncramped Code & Tables**: Markdown tables and long code blocks expand horizontally without awkward line wraps or scrollbars.
-- **Balanced Prompt Bubbles**: Restricts user prompt bubbles to `min(75%, 1200px)` to preserve conversation hierarchy.
-- **Zero Overhead & Pure CSS**: Runs at `@run-at document-start` to eliminate visual flashing (FOUC); zero tracking and zero runtime performance cost.
-- **Mobile Responsive**: Automatically contracts to 96% on small viewports (≤600px) to prevent horizontal scrolling.
+- **Wider Layout**: Uses ~92% width on desktop (max 1800px; 2000px on displays ≥2560px).
+- **Readable Code & Tables**: Expands code blocks and Markdown tables without horizontal scrolling.
+- **Constrained Prompts**: Caps user query bubbles at `min(75%, 1200px)`.
+- **Pure CSS**: Injected at `@run-at document-start` with no layout shifts and zero tracking.
+- **Mobile Responsive**: Automatically narrows on screens ≤600px.
 
 ---
 
 ## 📦 Installation
 
-### Method 1: GreasyFork One-Click (Recommended)
-
-1. Install [Tampermonkey](https://www.tampermonkey.net/) or Violentmonkey browser extension.
-2. Visit: 👉 [Wider Gemini on GreasyFork](https://greasyfork.org/scripts/552886-wider-gemini).
-3. Click **"Install this script"** to enable automatic updates.
-
-### Method 2: Manual Installation
-
-1. Open [wider-gemini.user.js](wider-gemini.user.js) and copy the entire code.
-2. In Tampermonkey, select **"Create a new script"**.
-3. Clear the default template, paste the code, and press `Ctrl + S` to save.
-4. Refresh any supported AI website.
+- **GreasyFork (Recommended)**: Install directly from [GreasyFork](https://greasyfork.org/scripts/552886-wider-gemini) for automatic updates.
+- **Manual**: Copy [wider-gemini.user.js](wider-gemini.user.js), paste into a new Tampermonkey script, and save.
 
 ---
 
 ## ❓ FAQ
 
 <details>
-<summary><b>1. Script not working after installation?</b></summary>
+<summary><b>1. Not working?</b></summary>
 
-- Verify you are running **v3.4+**.
-- Ensure Tampermonkey is enabled and active on the website (extension badge shows active script).
-- Perform a hard refresh using **`Ctrl + F5`**.
+Ensure v3.4+, verify Tampermonkey is active, and hard refresh with `Ctrl + F5`.
 </details>
 
 <details>
-<summary><b>2. ChatGPT not widening when logged in?</b></summary>
+<summary><b>2. ChatGPT logged-in issue?</b></summary>
 
-Modern ChatGPT uses Tailwind v4 dynamic CSS variables. v3.2+ completely resolves this issue. Ensure your script is updated to the latest version.
+v3.2+ overrides Tailwind v4 CSS variables. Update to the latest version.
 </details>
 
 <details>
@@ -73,11 +61,12 @@ Modern ChatGPT uses Tailwind v4 dynamic CSS variables. v3.2+ completely resolves
 
 Please submit an issue at https://github.com/Dean-op/WiderWebLLM/issues, and we will adapt to the new webpage structure as soon as possible.
 </details>
+
 ---
 
 # WiderWebLLM (Wider Gemini) - 中文说明
 
-一个轻量、高效的浏览器用户脚本（UserScript），专为宽屏与超宽屏（2K / 4K / 带鱼屏）用户打造。一站式破除主流网页版大语言模型（LLM）对话区域的狭窄限制，充分利用屏幕横向空间，带来极致的代码、表格与长文本阅读体验。
+一个用于加宽主流网页版 AI 对话内容与输入区域的 Tampermonkey 用户脚本。
 
 ---
 
@@ -95,53 +84,43 @@ Please submit an issue at https://github.com/Dean-op/WiderWebLLM/issues, and we 
 
 ## ✨ 核心特性
 
-- **宽屏极致视野**：桌面端默认利用约 92% 屏幕可用宽度（上限 1800px），2560px+ 超宽屏自动上浮至 2000px。
-- **代码与表格无损展开**：复杂表格与长代码块完整舒展展开，告别频繁水平滚动与不合理折行。
-- **人性化提问气泡约束**：用户自身提问气泡限制在 `min(75%, 1200px)` 内，保持对话层次主次分明。
-- **零损耗纯 CSS 注入**：`@run-at document-start` 消除首屏闪烁；纯样式注入，零网络请求与数据收集。
-- **移动端自适应**：600px 以下小屏自动收窄至 96%，坚决避免水平横向滚动条。
+- **加宽界面**：普通桌面默认使用约 92% 可用宽度（上限 1800px，2560px+ 屏幕上限 2000px）。
+- **代码与表格展开**：代码块与 Markdown 表格完整水平展开，减少水平滚动。
+- **提问气泡约束**：用户自身提问气泡限制在 `min(75%, 1200px)` 内。
+- **纯 CSS 注入**：`@run-at document-start` 消除闪烁，无额外性能开销与数据收集。
+- **移动端适配**：600px 以下屏幕自动收窄至 96%，防止横向滚动。
 
 ---
 
 ## 📦 安装方式
 
-### 方式一：GreasyFork 一键安装（推荐）
-
-1. 浏览器安装 [Tampermonkey（油猴）](https://www.tampermonkey.net/) 或 Violentmonkey（暴力猴）扩展。
-2. 前往 GreasyFork 脚本主页：👉 [Wider Gemini (GreasyFork)](https://greasyfork.org/scripts/552886-wider-gemini)。
-3. 点击绿色 **“安装此脚本”** 按钮即可，后续可享受自动更新。
-
-### 方式二：手动安装
-
-1. 打开 [wider-gemini.user.js](wider-gemini.user.js) 复制全部代码。
-2. 在 Tampermonkey 中新建脚本，清空默认模板后粘贴并保存（`Ctrl + S`）。
-3. 打开或刷新任意受支持的 AI 网页即可生效。
+- **GreasyFork（推荐）**：直接在 [GreasyFork](https://greasyfork.org/scripts/552886-wider-gemini) 点击安装，支持自动检查更新。
+- **手动安装**：复制 [wider-gemini.user.js](wider-gemini.user.js) 内容，在 Tampermonkey 中新建脚本粘贴并保存。
 
 ---
 
-## ❓ 常见问题排查 (FAQ)
+## ❓ 常见问题
 
 <details>
-<summary><b>1. 脚本安装后没有任何加宽效果？</b></summary>
+<summary><b>1. 未生效？</b></summary>
 
-- **检查版本**：确保脚本已更新至 **v3.4+** 最新版本。
-- **确认启用**：确认 Tampermonkey 处于启用状态且该域名下脚本已激活（显示数字角标）。
-- **强刷缓存**：在对应网页按下 **`Ctrl + F5`** 强制刷新。
+确认脚本为 v3.4+，检查 Tampermonkey 是否启用，或按 `Ctrl + F5` 强制刷新。
 </details>
 
 <details>
-<summary><b>2. ChatGPT 登录后失效？</b></summary>
+<summary><b>2. ChatGPT 登录态失效？</b></summary>
 
-新版 ChatGPT 采用了 Tailwind v4 动态 CSS 变量控制布局，v3.2+ 版本已全面覆盖修复。请确保油猴中的脚本已更新至最新源码。
+新版使用 Tailwind v4 动态变量，v3.2+ 已修复，更新脚本即可。
 </details>
 
 <details>
 <summary><b>3. 脚本效果失效？</b></summary>
 
-请到 https://github.com/Dean-op/WiderWebLLM/issues 添加Issues，会尽快适配新版网页结构
+请到 https://github.com/Dean-op/WiderWebLLM/issues 添加 Issues，会尽快适配新版网页结构。
 </details>
+
 ---
 
 ## 📄 许可证 / License
 
-本项目基于 [MIT](LICENSE) 许可证开源。
+[MIT](LICENSE)
