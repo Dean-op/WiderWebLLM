@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.4] - 2026-10-15
+
+- 新增 DeepSeek（`chat.deepseek.com`）网页版适配。
+- 覆盖 DeepSeek 的 `--dsh-chat-content-width`、`--dsh-composer-card-max-width` 与 `--message-list-max-width` 动态变量。
+- 针对 DeepSeek 的 `.ds-markdown` 回复正文、代码块、表格及底部输入框进行全宽对齐加宽。
+- 增加 DeepSeek 的超宽屏（≥2560px）与移动端响应式适配。
+
+## [3.3] - 2026-10-15
+
+- 新增 Grok（`grok.com` 与 `x.com/i/grok`）网页版适配。
+- 覆盖 Grok 的 `--content-max-width` 动态变量与居中对话气泡容器，全面加宽对话内容与输入区域。
+- 增加 Grok 的超宽屏（≥2560px）与移动端响应式适配。
+
 ## [3.2] - 2026-10-15
 
 - 修复现代 ChatGPT 登录态使用 Tailwind v4 动态 CSS 变量（`--thread-content-max-width` / `max-w-(--thread-content-max-width)`）导致未生效的问题。

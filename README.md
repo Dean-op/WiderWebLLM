@@ -7,12 +7,16 @@
 - Gemini：`gemini.google.com`
 - ChatGPT：`chatgpt.com`、`chat.openai.com`
 - 腾讯元宝：`yuanbao.tencent.com`
+- Grok：`grok.com`、`x.com/i/grok`
+- DeepSeek：`chat.deepseek.com`
 
 ## 功能
 
 - 加宽 Gemini 实际 Markdown 回复正文，覆盖新版默认的 `708px` 宽度限制。
 - 加宽 ChatGPT 助手回复中的段落、标题、列表、代码块、表格以及底部输入区域（全面支持登录态与未登录态及多语言界面）。
 - 加宽腾讯元宝 AI 回复内容和输入区域。
+- 加宽 Grok 聊天界面、消息气泡与输入框，覆盖 `--content-max-width` 限制。
+- 加宽 DeepSeek 对话列表、`.ds-markdown` 回复正文与输入框，覆盖 `--dsh-chat-content-width` 等变量限制。
 - 普通桌面屏幕使用约 `92%` 可用宽度。
 - `2560px` 以上屏幕最大宽度为 `2000px`。
 - 移动端自动收窄，避免横向滚动。
