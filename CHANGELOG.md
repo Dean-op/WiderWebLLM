@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.6] - 2026-10-16
+
+- 深度适配通义千问 Qwen 国际版（`chat.qwen.ai`、`chat.qwenlm.ai`）与国内版（`qianwen.com`、`tongyi.aliyun.com`）。
+- 国际版：精准适配 `.qwen-chat-message`、`.message-input-wrapper`、`.agent-mode-feedback-gate` 等会话流与底部输入框。
+- 国内版：精准解限 `[class*="auto-center-wrapper"]`、`[class*="guideContainer"]`、`[class*="inputMotionCarrier"]`，覆盖 `--qianwen-main-area-content-max-width` 等变量与行内样式。
+- 修复上一版本选择器未命中导致无法生效的问题，全面支持首屏与会话态。
+
+## [3.5] - 2026-10-16
+
+- 新增通义千问 Qwen 国际版（`chat.qwen.ai`）与国内版（`qianwen.com` / `tongyi.aliyun.com`）网页端适配。
+- 覆盖 Qwen 对话主容器、消息列表与底部输入区域（`textarea` 容器）。
+- 增加 Qwen 的超宽屏（≥2560px）与移动端响应式适配。
+
 ## [3.4] - 2026-10-15
 
 - 新增 DeepSeek（`chat.deepseek.com`）网页版适配。

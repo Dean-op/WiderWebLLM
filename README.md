@@ -1,7 +1,7 @@
 # WiderWebLLM (Wider Gemini)
 
 <p align="left">
-  <img src="https://img.shields.io/badge/version-3.4-blue.svg" alt="version">
+  <img src="https://img.shields.io/badge/version-3.6-blue.svg" alt="version">
   <img src="https://img.shields.io/badge/Tampermonkey-supported-green.svg" alt="tampermonkey">
   <img src="https://img.shields.io/badge/license-MIT-orange.svg" alt="license">
   <a href="https://greasyfork.org/scripts/552886-wider-gemini"><img src="https://img.shields.io/badge/GreasyFork-552886-red.svg" alt="greasyfork"></a>
@@ -22,6 +22,7 @@ A Tampermonkey userscript that widens the chat and input area across web AI plat
 | **Tencent Yuanbao** | `yuanbao.tencent.com` | ✅ | ✅ | ✅ All locales | Expands `.agent-chat__bubble--ai` and input wrappers |
 | **xAI Grok** | `grok.com`<br>`x.com/i/grok` | ✅ | ✅ | ✅ Standalone + X | Overrides `--content-max-width` and unlocks center stream |
 | **DeepSeek** | `chat.deepseek.com` | ✅ | ✅ | ✅ All locales | Overrides `--dsh-chat-content-width` and `.ds-markdown` containers |
+| **Qwen (通义千问)** | `chat.qwen.ai`<br>`qianwen.com` | ✅ | ✅ | ✅ Global & Domestic | Overrides `--qianwen-main-area-content-max-width` and expands chat / input wrappers |
 
 ---
 
@@ -47,7 +48,7 @@ A Tampermonkey userscript that widens the chat and input area across web AI plat
 <details>
 <summary><b>1. Not working?</b></summary>
 
-Ensure v3.4+, verify Tampermonkey is active, and hard refresh with `Ctrl + F5`.
+Ensure v3.6+, verify Tampermonkey is active, and hard refresh with `Ctrl + F5`.
 </details>
 
 <details>
@@ -79,6 +80,7 @@ Please submit an issue at https://github.com/Dean-op/WiderWebLLM/issues, and we 
 | **腾讯元宝** | `yuanbao.tencent.com` | ✅ | ✅ | ✅ 全语言 | 覆盖 `.agent-chat__bubble--ai` 及输入组件 |
 | **xAI Grok** | `grok.com`<br>`x.com/i/grok` | ✅ | ✅ | ✅ 独立站 + X内嵌 | 覆写 `--content-max-width` 变量并解除居中流约束 |
 | **DeepSeek** | `chat.deepseek.com` | ✅ | ✅ | ✅ 全语言 | 覆写 `--dsh-chat-content-width` 及 `.ds-markdown` 容器 |
+| **通义千问 (Qwen)** | `chat.qwen.ai`<br>`qianwen.com` | ✅ | ✅ | ✅ 国际版 + 国内版 | 覆写 `--qianwen-main-area-content-max-width` 变量，解限 `.qwen-chat-message` 与输入框载体 |
 
 ---
 
@@ -104,7 +106,7 @@ Please submit an issue at https://github.com/Dean-op/WiderWebLLM/issues, and we 
 <details>
 <summary><b>1. 未生效？</b></summary>
 
-确认脚本为 v3.4+，检查 Tampermonkey 是否启用，或按 `Ctrl + F5` 强制刷新。
+确认脚本为 v3.6+，检查 Tampermonkey 是否启用，或按 `Ctrl + F5` 强制刷新。
 </details>
 
 <details>

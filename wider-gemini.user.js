@@ -2,9 +2,9 @@
 // @name         Wider Gemini
 // @name:zh-CN   加宽 Gemini
 // @namespace    http://tampermonkey.net/
-// @version      3.4
-// @description  Widen the content area on Gemini, ChatGPT, Yuanbao, Grok and DeepSeek
-// @description:zh-CN  加宽 Gemini、ChatGPT、腾讯元宝、Grok 和 DeepSeek 网页版的显示内容
+// @version      3.6
+// @description  Widen the content area on Gemini, ChatGPT, Yuanbao, Grok, DeepSeek and Qwen
+// @description:zh-CN  加宽 Gemini、ChatGPT、腾讯元宝、Grok、DeepSeek 和通义千问网页版的显示内容
 // @author       dean
 // @match        https://gemini.google.com/*
 // @match        https://chatgpt.com/*
@@ -13,6 +13,13 @@
 // @match        https://grok.com/*
 // @match        https://x.com/i/grok*
 // @match        https://chat.deepseek.com/*
+// @match        https://chat.qwen.ai/*
+// @match        https://chat.qwenlm.ai/*
+// @match        https://www.qianwen.com/*
+// @match        https://qianwen.com/*
+// @match        https://tongyi.aliyun.com/*
+// @match        https://tongyi.com/*
+// @match        https://www.tongyi.com/*
 // @run-at       document-start
 // @grant        GM_addStyle
 // @license      MIT
@@ -318,6 +325,139 @@
             box-sizing: border-box !important;
         }
 
+        /* ------------------------------
+         * Qwen (chat.qwen.ai, chat.qwenlm.ai, qianwen.com, tongyi.aliyun.com)
+         * ------------------------------ */
+        :root,
+        body,
+        #root,
+        #app,
+        #__next {
+            --qianwen-main-area-content-max-width: ${CONFIG.max} !important;
+            --max-message-list-width: ${CONFIG.max} !important;
+            --message-content-width: ${CONFIG.max} !important;
+            --chat-input-visible-shell-max-width: ${CONFIG.max} !important;
+            --content-max-width: ${CONFIG.max} !important;
+        }
+
+        /* 国际版 (chat.qwen.ai) 对话主消息流与容器 */
+        .qwen-chat-message,
+        .qwen-chat-message.qwen-chat-message-dual-message,
+        .qwen-chat-message.qwen-chat-message-multi-message,
+        .pcht,
+        .pch,
+        .placeholder-logo-pc-container .placeholder-logo-pc-container-multi-model,
+        .placeholder-logo-pc-container .placeholder-logo-text,
+        .qwen-chat-message-select-turn-active,
+        .share-layout .share-layout-header-wrapper,
+        .share-layout .qwen-chat-message {
+            width: ${CONFIG.width} !important;
+            max-width: ${CONFIG.max} !important;
+            margin-inline: auto !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 国际版 (chat.qwen.ai) 底部与首页输入框容器 */
+        .message-input-wrapper,
+        .agent-mode-feedback-gate,
+        .chat-message-input-fixed .chat-message-input-fixed-container,
+        .pct__header .message-input-wrapper {
+            width: ${CONFIG.width} !important;
+            max-width: ${CONFIG.max} !important;
+            margin-inline: auto !important;
+            box-sizing: border-box !important;
+        }
+
+        .agent-mode-feedback-gate .message-input-wrapper,
+        .chat-message-input-fixed .message-input-wrapper {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .message-input-container,
+        .message-input-container-area,
+        .message-input-textarea {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 国际版回复内容与 Markdown 块 */
+        .chat-response-message,
+        .response-message-content,
+        .custom-qwen-markdown,
+        .qwen-markdown {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .chat-user-message-container .chat-user-message-wrapper .chat-user-message {
+            max-width: min(75%, ${CONFIG.promptMax}) !important;
+        }
+
+        /* 国内版 (qianwen.com, tongyi.aliyun.com) 外层解限与主对话流 */
+        .chat-container-wrapper,
+        [class*="chat-room-outer-wrap"],
+        [class*="chatRoom"],
+        #pc-center-wrapper {
+            width: 100% !important;
+            max-width: none !important;
+        }
+
+        [class*="auto-center-wrapper"],
+        [class*="guideContainer"],
+        [class*="main-area-content"] {
+            width: ${CONFIG.width} !important;
+            max-width: ${CONFIG.max} !important;
+            margin-inline: auto !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 国内版会话轮次与卡片全宽填充 */
+        .chat-round,
+        .chat-question-wrap,
+        .chat-answers-card-wrap,
+        .message-card-wrap {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 国内版提问气泡限制 */
+        .chat-round .question-text-card {
+            max-width: min(75%, ${CONFIG.promptMax}) !important;
+        }
+
+        /* 国内版输入框容器 (含带行内样式的动态容器) */
+        [class*="inputMotionCarrier"],
+        [class*="text-area-slot-container"],
+        [class*="inputOutWrap"] {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 国内版 Markdown、内容与引用卡片 */
+        .qk-markdown,
+        .markdown-pc-special-class,
+        [class*="thinkingContent"] {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        [class*="container-ombMM0"],
+        [class*="ref-card-wrap"] {
+            max-width: 100% !important;
+        }
+
+        .qk-markdown :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre, table),
+        .qwen-markdown :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre, table) {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
         @media (min-width: 2560px) {
             :root,
             body,
@@ -331,6 +471,9 @@
                 --dsh-chat-content-width: ${CONFIG.ultraWideMax} !important;
                 --dsh-composer-card-max-width: ${CONFIG.ultraWideMax} !important;
                 --message-list-max-width: ${CONFIG.ultraWideMax} !important;
+                --qianwen-main-area-content-max-width: ${CONFIG.ultraWideMax} !important;
+                --message-content-width: ${CONFIG.ultraWideMax} !important;
+                --chat-input-visible-shell-max-width: ${CONFIG.ultraWideMax} !important;
             }
 
             mat-sidenav-content,
@@ -376,7 +519,21 @@
             .agent-chat__list__item__content,
             .agent-chat__bubble--ai,
             .agent-chat__bubble--ai .agent-chat__bubble__content,
-            .agent-chat__bubble--ai .agent-chat__bubble__content > .hyc-component-text {
+            .agent-chat__bubble--ai .agent-chat__bubble__content > .hyc-component-text,
+            .qwen-chat-message,
+            .qwen-chat-message.qwen-chat-message-dual-message,
+            .qwen-chat-message.qwen-chat-message-multi-message,
+            .pcht,
+            .pch,
+            .placeholder-logo-pc-container .placeholder-logo-pc-container-multi-model,
+            .placeholder-logo-pc-container .placeholder-logo-text,
+            .message-input-wrapper,
+            .agent-mode-feedback-gate,
+            .chat-message-input-fixed .chat-message-input-fixed-container,
+            .pct__header .message-input-wrapper,
+            [class*="auto-center-wrapper"],
+            [class*="guideContainer"],
+            [class*="main-area-content"] {
                 max-width: ${CONFIG.ultraWideMax} !important;
             }
         }
@@ -407,7 +564,12 @@
             .agent-chat__list__content-wrapper,
             .agent-chat__list__content,
             .agent-dialogue__content--common__input__content,
-            .agent-dialogue__content--common__input-box {
+            .agent-dialogue__content--common__input-box,
+            .qwen-chat-message,
+            .message-input-wrapper,
+            .agent-mode-feedback-gate,
+            [class*="auto-center-wrapper"],
+            [class*="guideContainer"] {
                 width: 96% !important;
             }
 
@@ -427,7 +589,7 @@
             style.textContent = customCSS;
             (document.head || document.documentElement).appendChild(style);
         }
-        console.log('Wider Gemini v3.4 applied.');
+        console.log('Wider Gemini v3.6 applied.');
     } catch (e) {
         console.error('Wider Gemini script error:', e);
     }
