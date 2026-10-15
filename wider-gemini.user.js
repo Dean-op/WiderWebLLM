@@ -2,7 +2,7 @@
 // @name         Wider Gemini
 // @name:zh-CN   加宽 Gemini
 // @namespace    http://tampermonkey.net/
-// @version      3.0
+// @version      3.2
 // @description  Widen the content area on Gemini, ChatGPT and Yuanbao
 // @description:zh-CN  加宽 Gemini、ChatGPT 和腾讯元宝网页版的显示内容
 // @author       dean
@@ -10,6 +10,7 @@
 // @match        https://chatgpt.com/*
 // @match        https://chat.openai.com/*
 // @match        https://yuanbao.tencent.com/*
+// @run-at       document-start
 // @grant        GM_addStyle
 // @license      MIT
 // @downloadURL https://update.greasyfork.org/scripts/552886/Wider%20Gemini.user.js
@@ -80,33 +81,103 @@
         }
 
         /* ------------------------------
-         * ChatGPT
+         * ChatGPT (支持新版 Tailwind v4 动态变量与各种容器布局)
          * ------------------------------ */
-        main [aria-label^="Conversation"] > section {
-            padding-inline: 24px !important;
+        :root,
+        body,
+        #__next,
+        .composer-parent {
+            --thread-content-max-width: ${CONFIG.max} !important;
+            --thread-max-width: ${CONFIG.max} !important;
+            --composer-max-width: ${CONFIG.max} !important;
+            --conversation-width: ${CONFIG.max} !important;
+        }
+
+        /* 覆盖现代 ChatGPT 的核心宽度约束容器（同时包含对话列表与底部输入框） */
+        [class*="--thread-content-max-width"],
+        [class*="--thread-max-width"],
+        .max-w-\\(--thread-content-max-width\\),
+        .max-w-\\(--thread-max-width\\),
+        .max-w-\\[var\\(--thread-content-max-width\\)\\] {
+            width: ${CONFIG.width} !important;
+            max-width: ${CONFIG.max} !important;
+            margin-inline: auto !important;
             box-sizing: border-box !important;
         }
 
-        main [aria-label^="Conversation"] ol[aria-label="Conversation"],
-        main [aria-label^="Conversation"] ol[aria-label="Conversation"] > li {
-            width: 100% !important;
+        /* 覆盖各种历史/备用 Tailwind 宽度类 */
+        [class*="max-w-3xl"],
+        [class*="max-w-4xl"],
+        [class*="max-w-2xl"],
+        [class*="max-w-5xl"],
+        [class*="max-w-xl"],
+        [class*="max-w-[48rem]"],
+        [class*="max-w-[40rem]"],
+        [class*="xl:max-w-"],
+        [class*="lg:max-w-"],
+        [class*="md:max-w-"] {
             max-width: ${CONFIG.max} !important;
-            margin-inline: auto !important;
+            width: 100% !important;
         }
 
-        /* Current ChatGPT uses Response actions; older builds expose author data. */
-        main [aria-label^="Conversation"] ol[aria-label="Conversation"] > li:has([aria-label="Response actions"]),
-        main [aria-label^="Conversation"] [data-message-author-role="assistant"] {
+        /* 会话轮次元素 */
+        main article,
+        main [data-testid^="conversation-turn-"],
+        [data-testid^="conversation-turn-"],
+        article:has([data-message-author-role]),
+        main ol > li {
             width: 100% !important;
-            max-width: ${CONFIG.max} !important;
+            max-width: 100% !important;
             margin-inline: auto !important;
-        }
-
-        main [aria-label^="Conversation"] ol[aria-label="Conversation"] > li:has([aria-label="Response actions"]) :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre, table),
-        main [aria-label^="Conversation"] [data-message-author-role="assistant"] :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre, table) {
-            width: 100% !important;
-            max-width: ${CONFIG.max} !important;
             box-sizing: border-box !important;
+        }
+
+        main article > div,
+        main article .text-base,
+        main [data-testid^="conversation-turn-"] > div,
+        main [data-testid^="conversation-turn-"] .text-base,
+        [data-testid^="conversation-turn-"] .text-base {
+            max-width: 100% !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* AI 回复正文与 Markdown 块 */
+        [data-message-author-role="assistant"],
+        [data-message-author-role="assistant"] .markdown,
+        article:has([data-message-author-role="assistant"]) .markdown,
+        .markdown {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        [data-message-author-role="assistant"] :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre, table),
+        article:has([data-message-author-role="assistant"]) .markdown :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre, table),
+        .markdown :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre, table) {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 用户提问气泡宽度限制 */
+        [data-message-author-role="user"] {
+            max-width: min(75%, ${CONFIG.promptMax}) !important;
+        }
+
+        /* 底部输入框容器 */
+        form:has(#prompt-textarea),
+        main form,
+        .composer-parent form {
+            width: ${CONFIG.width} !important;
+            max-width: ${CONFIG.max} !important;
+            margin-inline: auto !important;
+            box-sizing: border-box !important;
+        }
+
+        form:has(#prompt-textarea) > div,
+        main form > div {
+            width: 100% !important;
+            max-width: 100% !important;
         }
 
         /* ------------------------------
@@ -150,6 +221,16 @@
         }
 
         @media (min-width: 2560px) {
+            :root,
+            body,
+            #__next,
+            .composer-parent {
+                --thread-content-max-width: ${CONFIG.ultraWideMax} !important;
+                --thread-max-width: ${CONFIG.ultraWideMax} !important;
+                --composer-max-width: ${CONFIG.ultraWideMax} !important;
+                --conversation-width: ${CONFIG.ultraWideMax} !important;
+            }
+
             mat-sidenav-content,
             .input-area-container,
             .bottom-bar-container,
@@ -157,12 +238,18 @@
             .conversation-container model-response .md-content > :not(#_),
             .conversation-container model-response .response-footer,
             .conversation-container model-response .response-container-footer,
-            main [aria-label^="Conversation"] ol[aria-label="Conversation"],
-            main [aria-label^="Conversation"] ol[aria-label="Conversation"] > li,
-            main [aria-label^="Conversation"] ol[aria-label="Conversation"] > li:has([aria-label="Response actions"]),
-            main [aria-label^="Conversation"] [data-message-author-role="assistant"],
-            main [aria-label^="Conversation"] ol[aria-label="Conversation"] > li:has([aria-label="Response actions"]) :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre, table),
-            main [aria-label^="Conversation"] [data-message-author-role="assistant"] :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre, table),
+            [class*="--thread-content-max-width"],
+            [class*="--thread-max-width"],
+            .max-w-\\(--thread-content-max-width\\),
+            .max-w-\\(--thread-max-width\\),
+            main article,
+            main [data-testid^="conversation-turn-"],
+            [data-testid^="conversation-turn-"],
+            article:has([data-message-author-role]),
+            main ol > li,
+            main form,
+            form:has(#prompt-textarea),
+            .composer-parent form,
             .agent-dialogue__content--common__homepage,
             .agent-chat__conv--agent-homepage-v2,
             .agent-chat__list__content-wrapper,
@@ -183,6 +270,10 @@
             mat-sidenav-content,
             .input-area-container,
             .bottom-bar-container,
+            [class*="--thread-content-max-width"],
+            [class*="--thread-max-width"],
+            form:has(#prompt-textarea),
+            main form,
             .agent-dialogue__content--common__homepage,
             .agent-chat__conv--agent-homepage-v2,
             .agent-chat__list__content-wrapper,
@@ -192,15 +283,23 @@
                 width: 96% !important;
             }
 
-            main [aria-label^="Conversation"] > section {
+            main section,
+            main article,
+            [data-testid^="conversation-turn-"] {
                 padding-inline: 12px !important;
             }
         }
     `;
 
     try {
-        GM_addStyle(customCSS);
-        console.log('Wider Gemini v3.0 applied.');
+        if (typeof GM_addStyle === 'function') {
+            GM_addStyle(customCSS);
+        } else {
+            const style = document.createElement('style');
+            style.textContent = customCSS;
+            (document.head || document.documentElement).appendChild(style);
+        }
+        console.log('Wider Gemini v3.2 applied.');
     } catch (e) {
         console.error('Wider Gemini script error:', e);
     }
