@@ -1,7 +1,7 @@
 # WiderWebLLM (Wider Gemini)
 
 <p align="left">
-  <img src="https://img.shields.io/badge/version-3.6-blue.svg" alt="version">
+  <img src="https://img.shields.io/badge/version-3.7-blue.svg" alt="version">
   <img src="https://img.shields.io/badge/Tampermonkey-supported-green.svg" alt="tampermonkey">
   <img src="https://img.shields.io/badge/license-MIT-orange.svg" alt="license">
   <a href="https://greasyfork.org/scripts/552886-wider-gemini"><img src="https://img.shields.io/badge/GreasyFork-552886-red.svg" alt="greasyfork"></a>
@@ -18,7 +18,7 @@ A Tampermonkey userscript that widens the chat and input area across web AI plat
 | Platform | Matching URL | Chat Widened | Input Bar Widened | Logged-in / Multi-lang | Core Mechanism |
 | :--- | :--- | :---: | :---: | :---: | :--- |
 | **Google Gemini** | `gemini.google.com` | ✅ | ✅ | ✅ All locales | Bypasses the default `708px` limit on Markdown body |
-| **OpenAI ChatGPT** | `chatgpt.com`<br>`chat.openai.com` | ✅ | ✅ | ✅ Guest & Logged-in | Overrides Tailwind v4 `--thread-content-max-width` variable |
+| **OpenAI ChatGPT** | `chatgpt.com`<br>`chat.openai.com` | ✅ | ✅ | ✅ Guest & Logged-in | Overrides Tailwind v4 `--thread-content-max-width` & `#web-mobile-root` layout |
 | **Tencent Yuanbao** | `yuanbao.tencent.com` | ✅ | ✅ | ✅ All locales | Expands `.agent-chat__bubble--ai` and input wrappers |
 | **xAI Grok** | `grok.com`<br>`x.com/i/grok` | ✅ | ✅ | ✅ Standalone + X | Overrides `--content-max-width` and unlocks center stream |
 | **DeepSeek** | `chat.deepseek.com` | ✅ | ✅ | ✅ All locales | Overrides `--dsh-chat-content-width` and `.ds-markdown` containers |
@@ -48,13 +48,13 @@ A Tampermonkey userscript that widens the chat and input area across web AI plat
 <details>
 <summary><b>1. Not working?</b></summary>
 
-Ensure v3.6+, verify Tampermonkey is active, and hard refresh with `Ctrl + F5`.
+Ensure v3.7+, verify Tampermonkey is active, and hard refresh with `Ctrl + F5`.
 </details>
 
 <details>
-<summary><b>2. ChatGPT logged-in issue?</b></summary>
+<summary><b>2. ChatGPT logged-in / incognito issue?</b></summary>
 
-v3.2+ overrides Tailwind v4 CSS variables. Update to the latest version.
+v3.2+ fixes logged-in Tailwind v4 layouts and v3.7+ adapts unauthenticated/incognito `#web-mobile-root`. For incognito tabs, also ensure Tampermonkey has "Allow in Incognito" enabled.
 </details>
 
 <details>
@@ -76,7 +76,7 @@ Please submit an issue at https://github.com/Dean-op/WiderWebLLM/issues, and we 
 | AI 平台 | 匹配网址 | 对话正文加宽 | 底部输入框加宽 | 登录态/多语言兼容 | 核心适配机制 |
 | :--- | :--- | :---: | :---: | :---: | :--- |
 | **Google Gemini** | `gemini.google.com` | ✅ | ✅ | ✅ 全语言 | 穿透覆盖官方新版正文默认的 `708px` 限制 |
-| **OpenAI ChatGPT** | `chatgpt.com`<br>`chat.openai.com` | ✅ | ✅ | ✅ 登录态 + 访客态 | 覆写 Tailwind v4 `--thread-content-max-width` 动态变量 |
+| **OpenAI ChatGPT** | `chatgpt.com`<br>`chat.openai.com` | ✅ | ✅ | ✅ 登录态 + 访客态 | 覆写 Tailwind v4 `--thread-content-max-width` 变量并兼容未登录态 `#web-mobile-root` |
 | **腾讯元宝** | `yuanbao.tencent.com` | ✅ | ✅ | ✅ 全语言 | 覆盖 `.agent-chat__bubble--ai` 及输入组件 |
 | **xAI Grok** | `grok.com`<br>`x.com/i/grok` | ✅ | ✅ | ✅ 独立站 + X内嵌 | 覆写 `--content-max-width` 变量并解除居中流约束 |
 | **DeepSeek** | `chat.deepseek.com` | ✅ | ✅ | ✅ 全语言 | 覆写 `--dsh-chat-content-width` 及 `.ds-markdown` 容器 |
@@ -106,13 +106,13 @@ Please submit an issue at https://github.com/Dean-op/WiderWebLLM/issues, and we 
 <details>
 <summary><b>1. 未生效？</b></summary>
 
-确认脚本为 v3.6+，检查 Tampermonkey 是否启用，或按 `Ctrl + F5` 强制刷新。
+确认脚本为 v3.7+，检查 Tampermonkey 是否启用，或按 `Ctrl + F5` 强制刷新。
 </details>
 
 <details>
-<summary><b>2. ChatGPT 登录态失效？</b></summary>
+<summary><b>2. ChatGPT 登录态或无痕/未登录态失效？</b></summary>
 
-新版使用 Tailwind v4 动态变量，v3.2+ 已修复，更新脚本即可。
+v3.2+ 已修复登录态 Tailwind v4 动态变量问题，v3.7+ 已适配未登录/无痕态 `#web-mobile-root` 结构。无痕窗口使用需确认扩展设置已开启「在无痕模式下允许」。
 </details>
 
 <details>

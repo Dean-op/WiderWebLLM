@@ -2,7 +2,7 @@
 // @name         Wider Gemini
 // @name:zh-CN   加宽 Gemini
 // @namespace    http://tampermonkey.net/
-// @version      3.6
+// @version      3.7
 // @description  Widen the content area on Gemini, ChatGPT, Yuanbao, Grok, DeepSeek and Qwen
 // @description:zh-CN  加宽 Gemini、ChatGPT、腾讯元宝、Grok、DeepSeek 和通义千问网页版的显示内容
 // @author       dean
@@ -41,6 +41,12 @@
         /* ------------------------------
          * Gemini
          * ------------------------------ */
+        :root,
+        body {
+            --bard-chat-window-max-width-default: ${CONFIG.max} !important;
+            --bard-chat-window-content-width-default: ${CONFIG.max} !important;
+        }
+
         mat-sidenav-content {
             width: ${CONFIG.width} !important;
             max-width: ${CONFIG.max} !important;
@@ -48,6 +54,7 @@
         }
 
         .input-area-container,
+        .initial-input-area .initial-input-area-container,
         .bottom-bar-container {
             width: ${CONFIG.width} !important;
             max-width: ${CONFIG.max} !important;
@@ -66,9 +73,10 @@
         }
 
         .conversation-container > user-query {
-            width: 100% !important;
-            max-width: 100% !important;
-            margin-inline: 0 !important;
+            width: ${CONFIG.width} !important;
+            max-width: ${CONFIG.max} !important;
+            margin-inline: auto !important;
+            box-sizing: border-box !important;
         }
 
         /* Gemini caps direct Markdown blocks at 708px. Widen the actual answer text. */
@@ -79,10 +87,24 @@
             margin-inline: auto !important;
         }
 
+        /* Gemini Luminous 2026 compact tables add centering padding on .table-content */
+        .conversation-container model-response .md-content > .horizontal-scroll-wrapper:not(#_),
+        .conversation-container model-response .table-block .table-content {
+            padding-inline: 0 !important;
+        }
+
+        .conversation-container model-response .table-block table {
+            min-width: 100% !important;
+            max-width: none !important;
+        }
+
+        .conversation-container model-response .response-container-header,
         .conversation-container model-response .response-footer,
-        .conversation-container model-response .response-container-footer {
+        .conversation-container model-response .response-container-footer,
+        .conversation-container model-response model-response-disclaimers {
             width: ${CONFIG.width} !important;
             max-width: ${CONFIG.max} !important;
+            box-sizing: border-box !important;
             margin-inline: auto !important;
         }
 
@@ -186,6 +208,58 @@
 
         form:has(#prompt-textarea) > div,
         main form > div {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        /* 未登录 / 无痕态 ChatGPT (unauth-mweb #web-mobile-root StyleX 布局) */
+        #web-mobile-root main[data-slot="conversation"] > div:has([data-web-mobile-conversation]) {
+            width: ${CONFIG.width} !important;
+            max-width: ${CONFIG.max} !important;
+            margin-inline: auto !important;
+            box-sizing: border-box !important;
+        }
+
+        #web-mobile-root [data-web-mobile-conversation],
+        #web-mobile-root [data-mobile-thread],
+        #web-mobile-root [data-mobile-thread-content],
+        #web-mobile-root [data-conversation-transcript],
+        #web-mobile-root [data-conversation-transcript] > li,
+        #web-mobile-root [data-message-role] {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        #web-mobile-root [data-message-role="assistant"] > div,
+        #web-mobile-root [data-assistant-markdown],
+        #web-mobile-root [data-assistant-markdown] > div,
+        #web-mobile-root [data-assistant-markdown] section[dir],
+        #web-mobile-root [data-assistant-markdown] :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre, table) {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        #web-mobile-root [data-submit-message-animation-target] > div:has([data-user-message-bubble]) {
+            max-width: min(75%, ${CONFIG.promptMax}) !important;
+        }
+
+        #web-mobile-root [data-slot="composer"] {
+            width: 100% !important;
+            max-width: none !important;
+        }
+
+        #web-mobile-root [data-slot="composer-replacement"],
+        #web-mobile-root [data-slot="composer"] > div:has(form) {
+            width: ${CONFIG.width} !important;
+            max-width: ${CONFIG.max} !important;
+            margin-inline: auto !important;
+            box-sizing: border-box !important;
+        }
+
+        #web-mobile-root [data-slot="composer-replacement"] form,
+        #web-mobile-root [data-slot="composer"] > div:has(form) form {
             width: 100% !important;
             max-width: 100% !important;
         }
@@ -474,15 +548,21 @@
                 --qianwen-main-area-content-max-width: ${CONFIG.ultraWideMax} !important;
                 --message-content-width: ${CONFIG.ultraWideMax} !important;
                 --chat-input-visible-shell-max-width: ${CONFIG.ultraWideMax} !important;
+                --bard-chat-window-max-width-default: ${CONFIG.ultraWideMax} !important;
+                --bard-chat-window-content-width-default: ${CONFIG.ultraWideMax} !important;
             }
 
             mat-sidenav-content,
             .input-area-container,
+            .initial-input-area .initial-input-area-container,
             .bottom-bar-container,
             .conversation-container,
+            .conversation-container > user-query,
             .conversation-container model-response .md-content > :not(#_),
+            .conversation-container model-response .response-container-header,
             .conversation-container model-response .response-footer,
             .conversation-container model-response .response-container-footer,
+            .conversation-container model-response model-response-disclaimers,
             [class*="--thread-content-max-width"],
             [class*="--thread-max-width"],
             .max-w-\\(--thread-content-max-width\\),
@@ -495,6 +575,9 @@
             main form,
             form:has(#prompt-textarea),
             .composer-parent form,
+            #web-mobile-root main[data-slot="conversation"] > div:has([data-web-mobile-conversation]),
+            #web-mobile-root [data-slot="composer-replacement"],
+            #web-mobile-root [data-slot="composer"] > div:has(form),
             [class*="--content-max-width"],
             .max-w-\\[--content-max-width\\],
             .flex.flex-col.items-center > div:not([class*="absolute"]),
@@ -541,11 +624,21 @@
         @media (max-width: 600px) {
             mat-sidenav-content,
             .input-area-container,
+            .initial-input-area .initial-input-area-container,
             .bottom-bar-container,
+            .conversation-container > user-query,
+            .conversation-container model-response .md-content > :not(#_),
+            .conversation-container model-response .response-container-header,
+            .conversation-container model-response .response-footer,
+            .conversation-container model-response .response-container-footer,
+            .conversation-container model-response model-response-disclaimers,
             [class*="--thread-content-max-width"],
             [class*="--thread-max-width"],
             form:has(#prompt-textarea),
             main form,
+            #web-mobile-root main[data-slot="conversation"] > div:has([data-web-mobile-conversation]),
+            #web-mobile-root [data-slot="composer-replacement"],
+            #web-mobile-root [data-slot="composer"] > div:has(form),
             [class*="--content-max-width"],
             .max-w-\\[--content-max-width\\],
             .flex.flex-col.items-center > div:not([class*="absolute"]),
@@ -578,6 +671,10 @@
             [data-testid^="conversation-turn-"] {
                 padding-inline: 12px !important;
             }
+
+            #web-mobile-root [data-assistant-markdown] section[dir] {
+                padding-inline: 0 !important;
+            }
         }
     `;
 
@@ -589,7 +686,7 @@
             style.textContent = customCSS;
             (document.head || document.documentElement).appendChild(style);
         }
-        console.log('Wider Gemini v3.6 applied.');
+        console.log('Wider Gemini v3.7 applied.');
     } catch (e) {
         console.error('Wider Gemini script error:', e);
     }

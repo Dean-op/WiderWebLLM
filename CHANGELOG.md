@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.7] - 2026-11-24
+
+- 修复 ChatGPT 未登录 / 无痕模式下脚本失效的问题：适配新版无痕/未登录端（`unauth-mweb` `#web-mobile-root` StyleX 架构）的 `main[data-slot="conversation"]`、`[data-web-mobile-conversation]`、`[data-assistant-markdown]` 与 `[data-slot="composer-replacement"]`。
+- 完善 Gemini 未登录态与 Luminous 2026 布局适配：覆写 `--bard-chat-window-max-width-default` 等动态变量，对齐 `user-query`、`.response-container-header`、`model-response-disclaimers` 及 `.initial-input-area-container`，并清除 `.table-block .table-content` 居中内边距实现表格全宽对齐。
+- 同步更新超宽屏（≥2560px）与移动端（≤600px）响应式规则。
+
 ## [3.6] - 2026-10-16
 
 - 深度适配通义千问 Qwen 国际版（`chat.qwen.ai`、`chat.qwenlm.ai`）与国内版（`qianwen.com`、`tongyi.aliyun.com`）。
